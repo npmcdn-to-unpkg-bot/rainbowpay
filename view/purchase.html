@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-us">
+        <head>
+    <meta charset="UTF-8">
+    <title>Rainbow by Amonsoft</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+            <script src="scripts/jquery-2.2.3.min.js"></script>
+  </head>
+  <body>
+    <section  class="page-header">
+        
+                <form method="post" id="formx"  ><!--autocomplete="off" onclick="data()"  action="purchase.php" "-->
+<h2>Purchase Form For Enteprises</h2>
+
+<input name="card_name"  id="card_name" placeholder="name" required class="btn"  /></br></br>
+<input name="card" id="card" type="number" placeholder="Card No" required class="btn" /></br></br>
+ <input name="pin" maxlength="4" id="pin" placeholder="PIN(4) NUMBER" type="password" pattern="[0-9]*" required class="btn" /></br></br>
+<input name="product"  id="product" class="btn" placeholder="Product"  /></br></br>
+<input name="quantity" id="quantity" type="number" required class="btn" type="number" placeholder="Quantity" /></br></br>
+<input name="seller" id="seller"  required class="btn" type="number" placeholder="Enterprise ID"  /></br></br>
+<input name="amount"  id="amount" type="number" required class="btn" placeholder="Amount" /></br></br>
+   
+    
+<button type="submit" id="btn" class="btn"  >Buy</button></br>
+  
+
+</br>
+</form> 
+        
+        
+      </section>
+
+<script>
+    $("btn").on("click",
+function(){
+       var names =  document.getElementById('card_name').value;
+    var quantity =  document.getElementById('quantity').value;
+    var seller =  document.getElementById('seller').value;
+    var card =  document.getElementById('card').value;
+    var amount =  document.getElementById('amount').value;
+     var pin =  document.getElementById('pin').value;
+    var product =  document.getElementById('product').value;
+    
+    
+    $.ajax({
+  url:"purchase.php",
+  type:'POST' ,
+   dataType:'JSON',
+  data: {
+    product:product,
+    seller:seller,
+    name: names,
+    card: card,
+    amount:amount,
+    quantity:quantity,
+    pin:pin
+  },
+  success: function( result ) {
+
+      console.log(result);
+     
+  }
+});
+    });
+    
+    
+</script>
+        </body>
+</html>

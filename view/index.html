@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Rainbow by Amonsoft</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+       <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script src="scripts/jquery-2.2.3.min.js"></script>
+  </head>
+  <body>
+     <!--  <div id="floatbar" style=" width:100%;height:10%;" class="page-header">
+    </div>   -->
+    <section  class="page-header">
+        
+      <h1 class="project-name">#Rainbow</h1>
+      <h2 class="project-tagline">#Rainbow Payment Service</h2>
+<a href="./login.html" class="btn" id="sign">Signed</a>
+      <a href="./login.html" class="btn">Login</a>  
+      <a href="./customer.html" class="btn">Register</a>
+      <a href="./deposit.html" class="btn">Deposit</a>
+      <a href="./purchase.html" class="btn">Purchase</a> 
+        <a href="./approve.php" class="btn">Approve</a> 
+         <a href="./staffreg.html" class="btn">Staff</a> 
+        <a href="./agent.html" class="btn">Agent</a> 
+        <a href="./enterprise.html" class="btn">Enterprise</a> 
+         <a href="./statement.html" class="btn">Statement</a>
+        <a href="./complaints.html" class="btn">complaints</a>
+        <!--<a href="./manager.html" class="btn">Manager</a>  -->
+        <a href="./search.html" class="btn">Search</a>
+        
+    </section> 
+
+  </body>
+    <script>
+      
+    function initApp() {
+      // Listening for auth state changes.
+      // [START authstatelistener]
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          var displayName = user.displayName;
+          var email = user.email;
+          var emailVerified = user.emailVerified;
+          var photoURL = user.photoURL;
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          var refreshToken = user.refreshToken;
+          var providerData = user.providerData;
+          // [START_EXCLUDE silent]
+          document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+          document.getElementById('quickstart-sign-in').textContent = 'Sign out';
+           // [END_EXCLUDE]
+        } else {
+          // User is signed out.
+          // [START_EXCLUDE silent]
+          document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
+          document.getElementById('quickstart-sign-in').textContent = 'Sign in';
+          document.getElementById('quickstart-account-details').textContent = 'null';
+          // [END_EXCLUDE]
+        }
+          
+          window.onload = function() {
+      initApp();
+                $(window).scroll(function(){
+    if ($(window).scrollTop() >= 200)
+    {
+        $("#floatbar").css({position:'fixed',left:'0',top:'0'});
+    }
+    else
+    {
+        $("#floatbar").css({position:'absolute',left:'0',top:'200px'});
+    }
+});
+    };
+    </script>
+</html>

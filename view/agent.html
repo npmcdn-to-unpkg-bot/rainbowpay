@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+    <meta charset="UTF-8">
+    <title>Rainbow by Amonsoft</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+    <body>
+         <section  class="page-header">
+          <a href="index.html" class="btn">HOME</a>
+    <h4>Registration Form</h4> 
+    <h4>Agent Form</h4>
+<form action="/server/register.php" method="post" autocomplete="off" >
+   <input name="fname" id="fname" placeholder="First Name" required  class="btn"/></br></br>
+ <input name="lname" id="lname" placeholder="Second Name" required class="btn"  /></br></br>
+ <input name="phone" type="tel" placeholder="Telephone" id="name" required class="btn" /></br></br>
+ <input name="email" type="email" id="email" placeholder="Email" required class="btn" /></br></br>
+ <input name="gender" id="gender" placeholder="Male or Female" required class="btn" /></br></br>
+ <input name="dob" type="date" required class="btn" /></br></br>
+ <input name="location" id="location" placeholder="Location" required class="btn" /></br></br>
+ <input name="nid" id="nid" placeholder="National ID" type="number" required class="btn"  /></br></br>
+ <input name="uname" id="uname" placeholder="Username" required class="btn" /></br></br>
+ <input name="contract" id="contract" placeholder="Contract No." type="number" required class="btn"  /></br></br>
+ <input name="tin" id="tin" placeholder="TIN/ Social Security" type="number"  class="btn"  /></br></br>
+<input name="type" value="agent" hidden="hidden"/>
+<button type="submit" class="btn">Register</button>
+</form>
+</section>
+    </body>
+    
+</html>
