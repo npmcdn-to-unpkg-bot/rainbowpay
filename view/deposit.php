@@ -9,6 +9,13 @@ $agent = $_POST['agent'];
 $location = $_POST['location'];
 
 /*code for card and Name and Agent check*/
+//create token for purchase
+    $num = array('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','y','z');
+for($i=0;$i<26;$i++){ // Token
+   // echo $num[rand(0,$i)] ;
+    $token .= $num[rand(rand(0,$i),$i)] ;
+//concatinate  the token
+}
 
 /**card check **/
 $card_check = mysql_query("SELECT * FROM card_tb WHERE card_no = '".$card."'");
@@ -26,6 +33,7 @@ $agent_row = mysql_fetch_assoc($agent_check);
 //user exists
 
 if($card_row != 0 && $buyer_row != 0 && $agent_row != 0  ){ // means all exist
+    $token .='deposit'; 
    //get old balance
     $old_buyer_balance = $buyer_row['balance'];
     
@@ -44,7 +52,7 @@ if($card_row != 0 && $buyer_row != 0 && $agent_row != 0  ){ // means all exist
      mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'buyer_deposit', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_buyer_balance."')");
     
     //record transactions for agent with new balance
-     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'agent_withdrawl', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_agent_balance."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'agent_withdrawl', '".$amount."', '".$agent."', '".$card."', '".$token."','".$charge."','".$location."','".$new_agent_balance."')");
     
     //update the bank
     $sql_bank = mysql_query("SELECT * FROM buyer_tb WHERE  username = 'bank'");
@@ -54,7 +62,7 @@ if($card_row != 0 && $buyer_row != 0 && $agent_row != 0  ){ // means all exist
     mysql_query("UPDATE  buyer_tb SET balance = '".$new_bank_balance."' WHERE username = 'bank' ");
     
     ////record transactions for bank with new balance
-     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'bank_count', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_bank_balance."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'bank_count', '".$amount."', '".$agent."', '".$card."', '".$token."','".$charge."','".$location."','".$new_bank_balance."')");
     //the end
     
     //provide server response
@@ -65,8 +73,9 @@ if($card_row != 0 && $buyer_row != 0 && $agent_row != 0  ){ // means all exist
 die();
  
 }else{
+    $token .='fail-deposit'; 
     //record failed transaction
-    mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'failed_deposit', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','000')");
+    mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'failed_deposit', '".$amount."', '".$agent."', '".$card."', '".$token."','".$charge."','".$location."','000')");
     header("Location: failure.html");
 }
 

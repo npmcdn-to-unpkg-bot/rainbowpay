@@ -26,6 +26,13 @@ for($x=0;$x<10;$x++){
 
 //dont create pin , becuase already entered by user
  
+//token
+for($i=0;$i<26;$i++){
+   // echo $num[rand(0,$i)] ;
+    $token .= $num[rand(rand(0,$i),$i)] ;
+//concatinate  the token
+}
+
 
 $agent = 0000;
 // echo $numx ;
@@ -36,10 +43,11 @@ $numrows = mysql_num_rows($oldcard);
 
 
 if($numrows == 0){
+    $token .= 'card';
     // echo $numx ;
-    mysql_query("INSERT INTO card_tb  ( card_no ,  pin ,  date_of_make ,  serial ,  assigned ,  agent_id ) VALUES ( '".$card."', '".$_POST["pin"]."', CURRENT_TIMESTAMP, '".$numz."', '".$name."', '".$agent."')");
+    mysql_query("INSERT INTO card_tb  ( card_no ,  pin ,  date_of_make ,  serial ,  assigned ,  agent_id,owner ) VALUES ( '".$card."', '".$_POST["pin"]."', CURRENT_TIMESTAMP, '".$numz."', '".$name."', '".$agent."','".$token."')");
     
-     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location) VALUES ( 'card_make', '000', '".$agent."', '".$card."', '0','0','".$_POST["location"]."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location) VALUES ( 'card_make', '000', '".$agent."', '".$card."', '".$token."','0','".$_POST["location"]."')");
     
 }else{
     

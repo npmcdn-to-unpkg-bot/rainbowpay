@@ -1,0 +1,32 @@
+<!Doctype>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>   
+</head>
+<body>
+    <button onclick="doodle()">Ajax Button</button>
+</body>
+    
+    <script>
+        function doodle(){
+         console.log("TOuched");   
+      
+    $.ajax({
+  method: "POST",
+  url: "http://ec2-54-191-230-33.us-west-2.compute.amazonaws.com/rainbow/view/purchase.php",
+  data: {  
+    product:'books',
+    seller:'2',
+    name: 'bank',
+    card: '2016',
+    amount:'87000',
+    quantity:'60',
+    pin:'123' 
+  }
+})
+  .done(function( msg ) {
+    alert( msg );
+  });
+              }
+    </script>
+</html>

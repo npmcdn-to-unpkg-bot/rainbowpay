@@ -1,6 +1,8 @@
 <?php
 require_once 'conn.php'; //connection link
-header('Allow-Control-Allow-Origin:*');//allowing external resource access
+//header('Allow-Control-Allow-Origin:*');//allowing
+header('Access-Control-Allow-Origin: *');
+//external resource access
 
 
 //varaibles passed
@@ -23,12 +25,16 @@ $buyer_check = mysql_query("SELECT * FROM buyer_tb WHERE username = '".$name."' 
 $buyer_row = mysql_fetch_assoc($buyer_check);
 // user exists
 
+//check the amount balance is enough
+$check_money = $buyer_row['balance'] + 500  ;
+($check_money > $amount);
+
 /***seller check****/
 $seller_check = mysql_query("SELECT * FROM seller_tb WHERE id = '".$seller."'");
 $seller_row = mysql_fetch_assoc($seller_check);
 //user exists
 
-if( $card_row != 0  &&  $buyer_row != 0  && $seller_row != 0   ){ // means all exist
+if( $card_row != 0  &&  $buyer_row != 0  && $seller_row != 0 && $check_money > $amount  ){ // means all exist
 
     //compute charge
     $charge_rate = 0.01;
@@ -40,11 +46,12 @@ if( $card_row != 0  &&  $buyer_row != 0  && $seller_row != 0   ){ // means all e
     //create token for purchase
     $num = array('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','y','z');
 
-for($i=0;$i<26;$i++){
+for($i=0;$i<26;$i++){ // Token
    // echo $num[rand(0,$i)] ;
     $token .= $num[rand(rand(0,$i),$i)] ;
 //concatinate  the token
 }
+    $token .='purcahse'; 
     //insert new purchase
      mysql_query("INSERT INTO  purchase_tb  ( item ,  amount ,  seller ,  buyer ,  quantity ,  card_no ,   token ) VALUES ( '".$product."', '".$seller_cash."', '".$seller."', '".$name."', '".$quantity."', '".$card."', '".$token."')");
     
@@ -70,6 +77,8 @@ for($i=0;$i<26;$i++){
     $token .= $num[rand(rand(0,$i),$i)] ;
 //concatinate  the token
 }
+    
+    $token .='fail-purcahse'; 
      //insert failed transaction
      mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'failed_purchase', '".$amount."', '0000', '".$card."', '".$token."','0000','".$seller."','".$buyer_row['balance']."')");
     
