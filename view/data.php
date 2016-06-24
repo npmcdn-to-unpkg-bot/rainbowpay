@@ -6,9 +6,9 @@ $name  = $_POST['name'];
 $card = $_POST['card'];
 */
 
- $sql_pending = mysqli_query($db_conn,"SELECT * FROM transact_tb ");
+ $sql_pending = mysql_query("SELECT * FROM transact_tb ");
     
-$numrows = mysqli_num_rows($sql_pending);
+$numrows = mysql_num_rows($sql_pending);
 
 
 echo " <div class='payment' >";
@@ -39,7 +39,7 @@ $data = array();
                     array('id' => '','label' => 'Sig','Pattern' => '', 'type' => 'string'),
                     array('id' => '','label' => 'Time','Pattern' => '', 'type' => 'number')
                     );
-  while ($row_pending = mysqli_fetch_assoc($sql_pending) and $v < $numrows )
+  while ($row_pending = mysql_fetch_assoc($sql_pending) and $v < $numrows )
 {
 
      //$a[$v] = $row_pending['id'];

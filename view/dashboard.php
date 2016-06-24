@@ -43,11 +43,11 @@
           */
             <?php
 require_once 'conn.php';
-$sql_pending = mysqli_query($db_conn,"SELECT * FROM pending_tb Limit 1");
-$numrows = mysqli_num_rows($sql_pending);
+$sql_pending = mysql_query("SELECT * FROM pending_tb Limit 1");
+$numrows = mysql_num_rows($sql_pending);
 $a = array();
 $v =0;
-$row_pending = $sql_pending)
+$row_pending = mysql_fetch_assoc($sql_pending)
             ?>
           
           

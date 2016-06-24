@@ -17,9 +17,9 @@
         <?php
 require_once 'conn.php';
 
-$sql_pending = mysqli_query($db_conn,"SELECT * FROM pending_tb WHERE purchase_token = '".$_POST['search']."'");
+$sql_pending = mysql_query("SELECT * FROM pending_tb WHERE purchase_token = '".$_POST['search']."'");
     
-$numrows = mysqli_num_rows($sql_pending);
+$numrows = mysql_num_rows($sql_pending);
 
 
 echo " <div class='payment' >";
@@ -47,7 +47,7 @@ echo " <div class='payment' >";
 
 $a = array();
 $v =0;
-  while ($row_pending = mysqli_fetch_assoc($sql_pending) and $v < $numrows )
+  while ($row_pending = mysql_fetch_assoc($sql_pending) and $v < $numrows )
 {
   //$a[$v] = $row_pending['id'];
       array_push($a,$row_pending['id']);
@@ -61,7 +61,7 @@ $v =0;
   echo "</td>";
       
          echo "<td style='border: groove 1px ;'>";
-      echo $row_pending['purchase_token'];
+      echo $row_pending['purchase_id'];
       echo " ";
   echo "</td>";
       

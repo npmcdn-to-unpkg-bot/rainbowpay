@@ -30,16 +30,16 @@ for($x=0;$x<10;$x++){
 $agent = 0000;
 // echo $numx ;
 
-$oldcard = mysqli_query($db_conn,"Select * FROM card_tb where card_no = '".$card."' AND serial = '".$numz."' AND pin = '".$_POST["pin"]."' ");
+$oldcard = mysql_query("Select * FROM card_tb where card_no = '".$card."' AND serial = '".$numz."' AND pin = '".$_POST["pin"]."' ");
 
-$numrows = mysqli_num_rows($oldcard);
+$numrows = mysql_num_rows($oldcard);
 
 
 if($numrows == 0){
     // echo $numx ;
-    mysqli_query($db_conn,"INSERT INTO card_tb  ( card_no ,  pin ,  date_of_make ,  serial ,  assigned ,  agent_id ) VALUES ( '".$card."', '".$_POST["pin"]."', CURRENT_TIMESTAMP, '".$numz."', '".$name."', '".$agent."')");
+    mysql_query("INSERT INTO card_tb  ( card_no ,  pin ,  date_of_make ,  serial ,  assigned ,  agent_id ) VALUES ( '".$card."', '".$_POST["pin"]."', CURRENT_TIMESTAMP, '".$numz."', '".$name."', '".$agent."')");
     
-     mysqli_query($db_conn,"INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location) VALUES ( 'card_make', '000', '".$agent."', '".$card."', '0','0','".$_POST["location"]."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location) VALUES ( 'card_make', '000', '".$agent."', '".$card."', '0','0','".$_POST["location"]."')");
     
 }else{
     

@@ -18,15 +18,15 @@
 <button type="button" onclick='approve()' class="btn">Approve</button>
     <button type="button" onclick='decline()' class="btn">Decline</button>
 </form>
-      
-    <a href="search.html"> <button type="submit" class="btn">Search</button></a>
+        <form action="search.php" method="post">
+     <button type="submit" class="btn">Search</button>
 </form>
         <?php
 require_once 'conn.php';
 
-$sql_pending = mysqli_query($db_conn,"SELECT * FROM pending_tb");
+$sql_pending = mysql_query("SELECT * FROM pending_tb");
     
-$numrows = mysqli_num_rows($sql_pending);
+$numrows = mysql_num_rows($sql_pending);
 
 
 echo " <div class='payment' >";
@@ -54,7 +54,7 @@ echo " <div class='payment' >";
 
 $a = array();
 $v =0;
-  while ($row_pending = mysqli_fetch_assoc($sql_pending) and $v < $numrows )
+  while ($row_pending = mysql_fetch_assoc($sql_pending) and $v < $numrows )
 {
 
      //$a[$v] = $row_pending['id'];
@@ -69,7 +69,7 @@ $v =0;
   echo "</td>";
       
          echo "<td style='border: groove 1px ;'>";
-      echo $row_pending['purchase_token'];
+      echo $row_pending['purchase_id'];
       echo " ";
   echo "</td>";
       

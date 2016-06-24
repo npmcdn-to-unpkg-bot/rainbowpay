@@ -14,18 +14,18 @@ header('Allow-Control-Allow-Origin:*');//allowing external resource access
 //check card and user and seller
 
 /**card check **/
-$card_check = mysqli_query($db_conn,"SELECT * FROM card_tb WHERE card_no = '".$card."'");
-$card_row = $card_check);
+$card_check = mysql_query("SELECT * FROM card_tb WHERE card_no = '".$card."'");
+$card_row = mysql_fetch_assoc($card_check);
 // card exists
 
 /***name check ***/
-$buyer_check = mysqli_query($db_conn,"SELECT * FROM buyer_tb WHERE username = '".$name."' && card_no = '".$card."' && pin = '".$pin."' ");
-$buyer_row = $buyer_check);
+$buyer_check = mysql_query("SELECT * FROM buyer_tb WHERE username = '".$name."' && card_no = '".$card."' && pin = '".$pin."' ");
+$buyer_row = mysql_fetch_assoc($buyer_check);
 // user exists
 
 /***seller check****/
-$seller_check = mysqli_query($db_conn,"SELECT * FROM seller_tb WHERE id = '".$seller."'");
-$seller_row = $seller_check);
+$seller_check = mysql_query("SELECT * FROM seller_tb WHERE id = '".$seller."'");
+$seller_row = mysql_fetch_assoc($seller_check);
 //user exists
 
 if( $card_row != 0  &&  $buyer_row != 0  && $seller_row != 0   ){ // means all exist
@@ -46,18 +46,18 @@ for($i=0;$i<26;$i++){
 //concatinate  the token
 }
     //insert new purchase
-     mysqli_query($db_conn,"INSERT INTO  purchase_tb  ( item ,  amount ,  seller ,  buyer ,  quantity ,  card_no ,   token ) VALUES ( '".$product."', '".$seller_cash."', '".$seller."', '".$name."', '".$quantity."', '".$card."', '".$token."')");
+     mysql_query("INSERT INTO  purchase_tb  ( item ,  amount ,  seller ,  buyer ,  quantity ,  card_no ,   token ) VALUES ( '".$product."', '".$seller_cash."', '".$seller."', '".$name."', '".$quantity."', '".$card."', '".$token."')");
     
     //insert new pending account
-     mysqli_query($db_conn,"INSERT INTO pending_tb  (  seller ,  amount , card_no_seller ,  product ,  status,purchase_token ) VALUES (  '".$seller."', '".$seller_cash."', '".$seller_row['card_no']."', '".$product."', 'new','".$token."')");
+     mysql_query("INSERT INTO pending_tb  (  seller ,  amount , card_no_seller ,  product ,  status,purchase_token ) VALUES (  '".$seller."', '".$seller_cash."', '".$seller_row['card_no']."', '".$product."', 'new','".$token."')");
     
     //update buyers account    
     $old_buyer_balance = $buyer_row['balance'];//get old balance
     $new_buyer_balance = $old_buyer_balance - $amount ;
-     mysqli_query($db_conn,"UPDATE  buyer_tb SET balance = '".$new_buyer_balance."' WHERE card_no = '".$card."' && username = '".$name."' ");
+     mysql_query("UPDATE  buyer_tb SET balance = '".$new_buyer_balance."' WHERE card_no = '".$card."' && username = '".$name."' ");
     
      //insert new transaction
-     mysqli_query($db_conn,"INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'purchase', '".$amount."', '0000', '".$card."', '".$token."','".$charge."','".$seller."','".$new_buyer_balance."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'purchase', '".$amount."', '0000', '".$card."', '".$token."','".$charge."','".$seller."','".$new_buyer_balance."')");
     echo json_encode($token.'success');
     
 }else{
@@ -71,7 +71,7 @@ for($i=0;$i<26;$i++){
 //concatinate  the token
 }
      //insert failed transaction
-     mysqli_query($db_conn,"INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'failed_purchase', '".$amount."', '0000', '".$card."', '".$token."','0000','".$seller."','".$buyer_row['balance']."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'failed_purchase', '".$amount."', '0000', '".$card."', '".$token."','0000','".$seller."','".$buyer_row['balance']."')");
     
  echo json_encode($token.'failed');
 

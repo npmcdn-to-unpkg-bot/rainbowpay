@@ -2,13 +2,13 @@
 require_once 'conn.php';
 
 
-//$name  = $_POST['name'];
+$name  = $_POST['name'];
 $card = $_POST['card'];
 
 
- $sql_pending = mysqli_query($db_conn,"SELECT * FROM transact_tb WHERE card_no = '".$card."'");
+ $sql_pending = mysql_query("SELECT * FROM transact_tb WHERE card_no = '".$card."'");
     
-$numrows = mysqli_num_rows($sql_pending);
+$numrows = mysql_num_rows($sql_pending);
 
 
 echo " <div class='payment' >";
@@ -34,7 +34,7 @@ echo " <div class='payment' >";
 
 $a = array();
 $v =0;
-  while ($row_pending = mysqli_fetch_assoc($sql_pending) and $v < $numrows )
+  while ($row_pending = mysql_fetch_assoc($sql_pending) and $v < $numrows )
 {
 
      //$a[$v] = $row_pending['id'];

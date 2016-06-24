@@ -11,18 +11,18 @@ $location = $_POST['location'];
 /*code for card and Name and Agent check*/
 
 /**card check **/
-$card_check = mysqli_query($db_conn,"SELECT * FROM card_tb WHERE card_no = '".$card."'");
-$card_row = $card_check);
+$card_check = mysql_query("SELECT * FROM card_tb WHERE card_no = '".$card."'");
+$card_row = mysql_fetch_assoc($card_check);
 // card exists
 
 /***name check ***/
-$buyer_check = mysqli_query($db_conn,"SELECT * FROM buyer_tb WHERE username = '".$name."' && card_no = '".$card."' ");
-$buyer_row = $buyer_check);
+$buyer_check = mysql_query("SELECT * FROM buyer_tb WHERE username = '".$name."' && card_no = '".$card."' ");
+$buyer_row = mysql_fetch_assoc($buyer_check);
 // user exists
 
 /***agent check****/
-$agent_check = mysqli_query($db_conn,"SELECT * FROM agent_tb WHERE id = '".$agent."'");
-$agent_row = $agent_check);
+$agent_check = mysql_query("SELECT * FROM agent_tb WHERE id = '".$agent."'");
+$agent_row = mysql_fetch_assoc($agent_check);
 //user exists
 
 if($card_row != 0 && $buyer_row != 0 && $agent_row != 0  ){ // means all exist
@@ -34,27 +34,27 @@ if($card_row != 0 && $buyer_row != 0 && $agent_row != 0  ){ // means all exist
     
     //reduce amount from agent with new deduction
     $new_agent_balance = $old_agent_balance - $amount ;
-    mysqli_query($db_conn,"UPDATE  agent_tb SET balance = '".$new_agent_balance."' WHERE id = '".$agent."'");
+    mysql_query("UPDATE  agent_tb SET balance = '".$new_agent_balance."' WHERE id = '".$agent."'");
     
     //add new new amount to buyer
     $new_buyer_balance = $old_buyer_balance + $amount ;
-     mysqli_query($db_conn,"UPDATE  buyer_tb SET balance = '".$new_buyer_balance."' WHERE card_no = '".$card."' && username = '".$name."' ");
+     mysql_query("UPDATE  buyer_tb SET balance = '".$new_buyer_balance."' WHERE card_no = '".$card."' && username = '".$name."' ");
     
     //record transactions for buyer with new balance
-     mysqli_query($db_conn,"INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'buyer_deposit', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_buyer_balance."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'buyer_deposit', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_buyer_balance."')");
     
     //record transactions for agent with new balance
-     mysqli_query($db_conn,"INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'agent_withdrawl', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_agent_balance."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'agent_withdrawl', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_agent_balance."')");
     
     //update the bank
-    $sql_bank = mysqli_query($db_conn,"SELECT * FROM buyer_tb WHERE  username = 'bank'");
-    $row_bank = $sql_bank);
+    $sql_bank = mysql_query("SELECT * FROM buyer_tb WHERE  username = 'bank'");
+    $row_bank = mysql_fetch_assoc($sql_bank);
     $old_bank_balance = $row_bank['balance'];
     $new_bank_balance = $old_bank_balance + $amount ;
-    mysqli_query($db_conn,"UPDATE  buyer_tb SET balance = '".$new_bank_balance."' WHERE username = 'bank' ");
+    mysql_query("UPDATE  buyer_tb SET balance = '".$new_bank_balance."' WHERE username = 'bank' ");
     
     ////record transactions for bank with new balance
-     mysqli_query($db_conn,"INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'bank_count', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_bank_balance."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'bank_count', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_bank_balance."')");
     //the end
     
     //provide server response
@@ -66,7 +66,7 @@ die();
  
 }else{
     //record failed transaction
-    mysqli_query($db_conn,"INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'failed_deposit', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','000')");
+    mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'failed_deposit', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','000')");
     header("Location: failure.html");
 }
 

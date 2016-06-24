@@ -1,18 +1,18 @@
 <?php
 require_once 'conn.php';
     //check for validity of id
-    $checkid = mysqli_query($db_conn,"SELECT * FROM staff_tb WHERE staff_contract_no ='".$_POST['manager']."' ");
-    $rowx = $checkid);
+    $checkid = mysql_query("SELECT * FROM staff_tb WHERE staff_contract_no ='".$_POST['manager']."' ");
+    $rowx = mysql_fetch_assoc($checkid);
     $manager_id = $rowx['staff_contract_no'];
     
      //check for validity of id
-    $checkid2 = mysqli_query($db_conn,"SELECT * FROM seller_tb WHERE id ='".$_POST['seller']."' ");
-    $rowx2 = $checkid2);
+    $checkid2 = mysql_query("SELECT * FROM seller_tb WHERE id ='".$_POST['seller']."' ");
+    $rowx2 = mysql_fetch_assoc($checkid2);
     $seller_id = $rowx2['id'];
     
     if($seller_id == $seller  &&  $manager_id == $manager){
     
- mysqli_query($db_conn,"INSERT INTO manager ( staff_id, seller_id) VALUES ( '".$_POST['manager']."', '".$_POST['seller']."')");
+ mysql_query("INSERT INTO manager ( staff_id, seller_id) VALUES ( '".$_POST['manager']."', '".$_POST['seller']."')");
       
        
         // header("Location: success.html");
