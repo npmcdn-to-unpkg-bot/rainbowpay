@@ -10,7 +10,7 @@ $location = $_POST['location'];
 
 /*code for card and Name and Agent check*/
 //create token for purchase
-    $num = array('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','y','z');
+    $num = array('0','1','2','j','k','l','m','n','o','6','7','8','9','p','q','r','s','t','u','3','4','5','a','b','c','d','e','f','g','h','i','v','w','y','z');
 for($i=0;$i<26;$i++){ // Token
    // echo $num[rand(0,$i)] ;
     $token .= $num[rand(rand(0,$i),$i)] ;
@@ -49,7 +49,7 @@ if($card_row != 0 && $buyer_row != 0 && $agent_row != 0  ){ // means all exist
      mysql_query("UPDATE  buyer_tb SET balance = '".$new_buyer_balance."' WHERE card_no = '".$card."' && username = '".$name."' ");
     
     //record transactions for buyer with new balance
-     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'buyer_deposit', '".$amount."', '".$agent."', '".$card."', '0000','".$charge."','".$location."','".$new_buyer_balance."')");
+     mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'buyer_deposit', '".$amount."', '".$agent."', '".$card."', '".$token."','".$charge."','".$location."','".$new_buyer_balance."')");
     
     //record transactions for agent with new balance
      mysql_query("INSERT INTO transact_tb ( type, amount, agent_id, card_no, mm_code, charge, location,balance) VALUES ( 'agent_withdrawl', '".$amount."', '".$agent."', '".$card."', '".$token."','".$charge."','".$location."','".$new_agent_balance."')");

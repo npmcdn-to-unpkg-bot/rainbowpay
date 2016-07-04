@@ -1,4 +1,4 @@
-<?php
+r<?php
 require_once 'conn.php';
     //check for validity of id
     $checkid = mysql_query("SELECT * FROM staff_tb WHERE staff_contract_no ='".$_POST['manager']."' ");
