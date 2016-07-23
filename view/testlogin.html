@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Rainbow by Amonsoft</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+      <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  </head>
+  <body>
+    <section  class="page-header">
+      <h1 class="project-name">#Rainbow</h1>
+      <h2 class="project-tagline">#Rainbow Payment Service Login</h2>
+<!--
+        <input id="email" name="email" type="email" placeholder="Email" class="btn" required  />
+        <input id="pwd" name="password" type="password" placeholder="Password" class="btn" required />
+        <button id="button" class="btn" onclick="power()">Create Acccount</button>
+        -->
+        <input id="emailx" name="emailx" type="email" placeholder="Email" class="btn" required  />
+        <input id="pwdx" name="passwordx" type="password" placeholder="Password" class="btn" required />
+        <button id="buttonx" class="btn" onclick="powerx()">Sigin</button>
+          <button id="buttonx" class="btn" onclick="power()">Reg</button>
+       <h4><a href="resetpassword.html">Forgot Password </a></h4> 
+        <p id="error"></p>
+        </section>   
+<script>
+      // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCWiOxfjaIxZpRySZ24HKWrS5j9EqZ1p4M",
+    authDomain: "rainbow-512e0.firebaseapp.com",
+    databaseURL: "https://rainbow-512e0.firebaseio.com",
+    storageBucket: "rainbow-512e0.appspot.com",
+  };
+  firebase.initializeApp(config);
+    
+    
+    function power(){
+        var email = document.getElementById('emailx').value;
+        var password = document.getElementById('pwdx').value;
+        
+
+    
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  
+        console.log(errorMessage);
+        console.log(errorCode);
+         var errorx = document.getElementById('error');
+        errorx.innerHTML = errorMessage;
+});
+        
+        firebase.auth().onAuthStateChanged(function(user) {
+  user.sendEmailVerification(); 
+});
+        var errorx = document.getElementById('error');
+        errorx.innerHTML = "Please Verify your Account in your Email";
+        } 
+    
+     function powerx(){
+         var email = document.getElementById('emailx').value;
+        var password = document.getElementById('pwdx').value;
+  // Initialize Firebase
+  
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  
+        console.log(errorMessage);
+        console.log(errorCode);
+});
+         
+               /*
+         
+             
+    firebase.auth().onAuthStateChanged(function(user) { 
+  if (user.emailVerified) {
+    console.log('Email is verified');
+  }
+  else {
+    console.log('Email is not verified');
+  }
+});
+
+*/
+         var user = firebase.auth().currentUser;
+    var name, email, photoUrl, uid;
+
+   
+if (user != null) {
+  //window.location.replace("http://ec2-54-191-230-33.us-west-2.compute.amazonaws.com/rainbow/view/");
+    console.log("Loggedin");
+  if (user.emailVerified) {
+    console.log('Email is verified');
+  }
+  else {
+    console.log('Email is not verified');
+  }
+} else {
+ // window.location.replace("http://localhost/cathy/rainbow/view/login.html");
+     console.log("Failed");
+}
+        }
+    
+    
+</script>
+    
+
+  </body>
+</html>
