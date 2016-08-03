@@ -5,8 +5,8 @@ header('Access-Control-Allow-Origin: *');
 //external resource access
 
 
-$sql_datax  = mysql_query("select * from transact_tb  limit 200");
-$sql_data  = mysql_query("select * from purchase_tb  limit 100,300");
+$sql_data  = mysql_query("select * from transact_tb  limit 200");
+//$sql_data  = mysql_query("select * from purchase_tb  limit 100,300");
 
 $numrows = mysql_num_rows($sql_data);
 

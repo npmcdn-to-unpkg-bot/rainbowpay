@@ -5,8 +5,10 @@ header('Access-Control-Allow-Origin: *');
 //external resource access
 
 
-$sql_datax  = mysql_query("select * from transact_tb  limit 200");
-$sql_data  = mysql_query("select * from purchase_tb  limit 100,300");
+//$sql_data  = mysql_query("select * from transact_tb where type = 'purchase' AND card_no = '2016' limit 200");
+//$sql_data  = mysql_query("select * from purchase_tb  limit 100,300");
+//pending_tb
+$sql_data  = mysql_query("select * from pending_tb ");
 
 $numrows = mysql_num_rows($sql_data);
 
@@ -17,12 +19,11 @@ echo json_encode($arr).",";
 $counter = 0;
  while ($row_pending = mysql_fetch_assoc($sql_data) AND $counter <300)
 {
-     
-   echo   json_encode(array($row_pending['card_no'],(int)$row_pending['amount'])).",";
+        echo   json_encode(array(substr($row_pending['time_stamp'], 0, -9),(int)$row_pending['amount'])).",";
      $counter++;
   
      }
-$arrx =  array('purcahse',0);
+$arrx =  array('2016-05-12',0);
 echo json_encode($arrx);
 
 echo ']';
